@@ -1,0 +1,1 @@
+hello this a simple example ./learning file handlig in java

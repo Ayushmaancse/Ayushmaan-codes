@@ -1,0 +1,3 @@
+Name: John Doe
+Email: john.doe@example.com
+This file was created without a folder.
