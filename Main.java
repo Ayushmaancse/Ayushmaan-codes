@@ -1,46 +1,53 @@
-// Parent class
+import java.util.Scanner;
+
 class User {
-    void accessDashboard() {
-        System.out.println("Accessing basic user dashboard...");
+    void login(String username) {
+        System.out.println(username + " logged in as guest.");
+    }
+
+    void login(String username, String password) {
+        System.out.println(username + " logged in with password.");
+    }
+
+    void login(String username, String password, String otp) {
+        System.out.println(username + " logged in with 2-factor authentication.");
     }
 }
-
-// Subclass: Admin user
-class AdminUser extends User {
-    @Override
-    void accessDashboard() {
-        System.out.println("Accessing Admin Dashboard with full privileges.");
-    }
-}
-
-// Subclass: Customer user
-class CustomerUser extends User {
-    @Override
-    void accessDashboard() {
-        System.out.println("Accessing Customer Dashboard with purchase options.");
-    }
-}
-
-// Subclass: Guest user
-class GuestUser extends User {
-    @Override
-    void accessDashboard() {
-        System.out.println("Accessing Guest Dashboard with limited access.");
-    }
-}
-
-// Main class to demonstrate runtime polymorphism
 class App {
     public static void main(String[] args) {
-        User user;
+        Scanner scanner = new Scanner(System.in);
+        User user = new User();
 
-        user = new AdminUser();
-        user.accessDashboard();  // Output: Accessing Admin Dashboard...
+        System.out.println("Enter username:");
+        String username = scanner.nextLine();
 
-        user = new CustomerUser();
-        user.accessDashboard();  // Output: Accessing Customer Dashboard...
+        System.out.println("Do you want to enter password? (yes/no):");
+        String wantPassword = scanner.nextLine();
 
-        user = new GuestUser();
-        user.accessDashboard();  // Output: Accessing Guest Dashboard...
+        if (wantPassword.equalsIgnoreCase("no")) {
+            // Only username -> guest login
+            user.login(username);
+
+        } else {
+            System.out.println("Enter password:");
+            String password = scanner.nextLine();
+
+            System.out.println("Do you want to enter OTP? (yes/no):");
+            String wantOtp = scanner.nextLine();
+
+            if (wantOtp.equalsIgnoreCase("no")) {
+                // Username + password login
+                user.login(username, password);
+
+            } else {
+                System.out.println("Enter OTP:");
+                String otp = scanner.nextLine();
+
+                // Username + password + OTP login
+                user.login(username, password, otp);
+            }
+        }
+
+        scanner.close();
     }
 }
